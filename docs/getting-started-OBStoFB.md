@@ -11,6 +11,9 @@ All the text marked as an example in this tutorial is just that—a sample that 
 
 Before you can use MediaLive, you need an AWS account and the appropriate permissions to access, create, and view MediaLive components\. Complete the steps in [Setting Up AWS Elemental MediaLive](setting-up.md), and then return to this tutorial\. You can't use MediaLive, even as an administrator with full access, until you perform those steps\.
 
+## Architecture
+![OBS Studio to Facebook Live](./images/MediaLive_OBSStudiotoFacebookLive.png)
+
 ## Step 1: Set Up the Upstream System (OBS Studio)<a name="getting-started-step1"></a>
 
 The upstream system is the local OBS Studio that streams the video to MediaLive\. The upstream system can be anything from an on\-premises appliance that is serving as a "contribution encoder" to an application running on a smart phone\. You must perform some setup of your upstream system before you start working with MediaLive\. 
@@ -45,7 +48,7 @@ You must set up a channel in AWS Elemental MediaPackage, and you must set it up 
 
    Your Live Stream to the Live API information is show in web page with **Server URL** and **Stream Key**
 
-## Step 3: Create an Input<a name="getting-started-step3"></a>
+## Step 3: Create an Input (Elemental MediaLive)<a name="getting-started-step3"></a>
 
 You must create an input\. The input defines how the upstream system provides the source video stream to MediaLive\. In this tutorial, you create an RTMP push input\. 
 
@@ -198,7 +201,7 @@ You have entered the minimum required information, so you are ready to create th
 
   The **Channel** section reappears and shows the newly created channel, named **MyHLS**\. The state changes to **Creating**, then **Ready**\.
 
-## Step 10: Start the Upstream System and the Channel<a name="getting-started-step8"></a>
+## Step 10: Start the Upstream System and the Channel (OBS Studio)<a name="getting-started-step8"></a>
 
 You can now start the upstream system in order to push the streaming content to MediaLive, encode the content, and send it to AWS Elemental MediaPackage\. You can preview the output on MediaPackage\.
 
