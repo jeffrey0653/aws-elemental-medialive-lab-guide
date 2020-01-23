@@ -1,4 +1,4 @@
-# Getting Started with AWS Elemental MediaLive<a name="getting-started"></a>
+# Getting Started with AWS Elemental MediaLive - OBS Studio to Facebook Live<a name="getting-started"></a>
 
 This tutorial describes how to ingest a video source from an RTMP push source and generate one RTMP output video and one audio \. MediaLive will send the output to Facebook Live. The output will consist of the following: 
 
@@ -110,25 +110,7 @@ Now you are ready to identify the input that the channel will ingest\.
 
 1. Choose **Confirm**\. The **Input attachment** section closes, and the **General input settings** section appears\.
 
-## Step 6: Set up Input Video, Audio, Captions<a name="getting-started-step4a-input-selectors"></a>
-
-You can create "selectors" to identify the specific video, audio, and captions that you want to extract from the input\. 
-
-In this tutorial, you don't create a video selector\. Instead, when the channel starts, MediaLive will automatically select the video \(or the first video\) in the input\. You also don't create a captions selector Typically, you include captions in the channel configuration, but in this tutorial we omit them\.
-
-You do create an audio selector\.
-
-**To identify the content to extract**
-
-1. On the **Create channel** page, in the **Input settings** pane, for **Audio** selectors, choose **Add audio selectors**\.
-
-1. For **Audio selector name**, enter **My audio source**\.
-
-   Ignore the **Selector settings** field\. You don't need to specify the PID or language\. When the channel starts, MediaLive will automatically select the first audio, which is acceptable for this tutorial\.
-
-1. For all other fields in this pane, keep the default values\. 
-
-## Step 7: Create an RTMP Output Group<a name="getting-started-step5"></a>
+## Step 6: Create an RTMP Output Group<a name="getting-started-step5"></a>
 
 Once you have set up the input, you continue with the channel creation by creating an output group\. In this tutorial, you set up an RTMP output group\.
 
@@ -142,7 +124,7 @@ Once you have set up the input, you continue with the channel creation by creati
    + For **URL**, enter the first input URL that Facebook Live generated `URL` for you in [Step 2: Set Up the Downstream System](#getting-started-step2)\. For example, **rtmps://live-api-s.facebook.com:443/rtmp/**\. 
    + For **Stream Name**, center the first input URL that Facebook Live generated `Stream Key` for you in [Step 2: Set Up the Downstream System](#getting-started-step2)\. For example, **152078559567871?s_bl=1&s_sw=0&s_vt=api-s&a=AbzpavjomoZCWztK**\.
 
-## Step 8: Create Your Channel<a name="getting-started-step7"></a>
+## Step 7: Create Your Channel<a name="getting-started-step7"></a>
 
 You have entered the minimum required information, so you are ready to create the channel\.
 
@@ -151,7 +133,7 @@ You have entered the minimum required information, so you are ready to create th
 
   The **Channel** section reappears and shows the newly created channel, named **MyHLS**\. The state changes to **Creating**, then **Ready**\.
 
-## Step 9: Start the Upstream System and the Channel (OBS Studio)<a name="getting-started-step8"></a>
+## Step 8: Start the Upstream System and the Channel (OBS Studio)<a name="getting-started-step8"></a>
 
 You can now start the upstream system in order to push the streaming content to MediaLive, encode the content, and send it to AWS Elemental MediaPackage\. You can preview the output on MediaPackage\.
 
@@ -169,7 +151,7 @@ You can now start the upstream system in order to push the streaming content to 
 
 1. Start the video\. The output from AWS Elemental MediaLive starts playing\.
 
-## Step 10: Clean Up<a name="getting-started-step9"></a>
+## Step - Clean Up<a name="getting-started-step9"></a>
 
 To avoid extraneous charges, delete this channel and input when you have finished working with it\.
 
