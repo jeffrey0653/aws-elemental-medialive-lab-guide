@@ -9,7 +9,7 @@ All the text marked as an example in this tutorial is just that—a sample that 
 
 ## Prerequisites<a name="getting-started-prerequisites"></a>
 
-Before you can use MediaLive, you need an AWS account and the appropriate permissions to access, create, and view MediaLive components\. Complete the steps in [Setting Up AWS Elemental MediaLive](setting-up.md), and then return to this tutorial\. You can't use MediaLive, even as an administrator with full access, until you perform those steps\.
+Before you can use MediaLive, you need an AWS account and the appropriate permissions to access, create, and view MediaLive components\.
 
 ## Architecture
 ![OBS Studio to Facebook Live](./images/MediaLive_OBSStudiotoFacebookLive.png)
@@ -62,19 +62,19 @@ You must also create an input security group for the input\. This input security
 
 1. On the **Inputs** page, choose **Create input**\.
 
-1. In the **Input details** section, for **Input name**, enter **My RTP push**\.
+1. In the **Input details** section, for **Input name**, enter **My OBS RTMP push**\.
 
-1. For **Input type**, choose **RTP**\. 
+1. For **Input type**, choose **RTMP (push)**\. 
 
 1. In the **Input security group** section, choose **Create**\. 
 
-1. In the text box, enter the IP address that you noted in [Step 1: Set Up the Upstream System](#getting-started-step1) of this tutorial\. Enter the address as a CIDR block\. For example, **203\.0\.113\.111/32** and **203\.0\.113\.112/32**\.
+1. In the text box, enter the IP address that you noted in [Step 1: Set Up the Upstream System](#getting-started-step1) of this tutorial\. Enter the address as a CIDR block\. For example, **203\.0\.113\.111/32** or **0.0.0.0/0**\.
 
 1. Choose **Create input security group**\.
 
 1. Choose **Create** to create the input\.
 
-   MediaLive adds the input to the list of inputs and automatically creates two destinations \(one primary and one redundant\)\. These destinations include the port 5000\. For example,  **rtp://198\.51\.100\.10:5000** and **rtp://192\.0\.2\.131:5000**\. These are the two locations where the upstream system must push the source\. 
+   MediaLive adds the input to the list of inputs and automatically creates two destinations \(one primary and one redundant\)\. These destinations include the port 5000\. For example,  **rtmp://18.176.19.105:1935/live/main** and **rtmp://18.178.120.169:1935/live/backup**\. These are the two locations where the upstream system must push the source\. 
 
 1. Make a note of these two addresses because you will need them in [Step 10: Start the Upstream System and the Channel](#getting-started-step8)\.
 
@@ -104,7 +104,7 @@ Now you are ready to identify the input that the channel will ingest\.
 
 1. On the **Create channel** page, in the navigation pane, for **Input attachments**, choose **Add**\.
 
-1. In **Attach input** , for **Input**, **My RTP push** \(the input that you created\.\) 
+1. In **Attach input** , for **Input**, **My OBS RTMP push** \(the input that you created\.\) 
 
    The **Attachment name** field is automatically populated with the name of the input itself\. You can leave this name as is\. 
 
@@ -128,71 +128,21 @@ You do create an audio selector\.
 
 1. For all other fields in this pane, keep the default values\. 
 
-## Step 7: Create an HLS Output Group<a name="getting-started-step5"></a>
+## Step 7: Create an RTMP Output Group<a name="getting-started-step5"></a>
 
-Once you have set up the input, you continue with the channel creation by creating an output group\. In this tutorial, you set up an HLS output group\.
+Once you have set up the input, you continue with the channel creation by creating an output group\. In this tutorial, you set up an RTMP output group\.
 
 **To create an output group**
 
 1. On the **Create channel** page, in the **Output groups** section, choose **Add**\. 
 
-1. In the **Add output group** section, choose **HLS**, and then choose **Confirm**\. 
+1. In the **Add output group** section, choose **RTMP**, and then choose **Confirm**\. 
 
-1. In the **HLS group destination A** section, for **URL**, enter the first input URL that AWS Elemental MediaPackage created for you in [Step 2: Set Up the Downstream System](#getting-started-step2)\. For example, **https://39fuo4\.mediapackage\.us\-east\-1\.amazonaws\.com/in/v1/88dpie/channel**``\. 
+1. In the **HLS group destination A** section  
+   + For **URL**, enter the first input URL that Facebook Live generated `URL` for you in [Step 2: Set Up the Downstream System](#getting-started-step2)\. For example, **rtmps://live-api-s.facebook.com:443/rtmp/**\. 
+   + For **Stream Name**, center the first input URL that Facebook Live generated `Stream Key` for you in [Step 2: Set Up the Downstream System](#getting-started-step2)\. For example, **152078559567871?s_bl=1&s_sw=0&s_vt=api-s&a=AbzpavjomoZCWztK**\.
 
-1. For **Credentials**:
-   + For **Username**, enter the user name that corresponds to this URL\. For example, **ue739wuty**\. 
-   + For **Password**, choose **Create parameter**\. For **Name**, enter **DestinationA\_MyHLS**\. For **Password**, enter the password that corresponds to the URL\. For example, **due484u**\.
-
-1. Choose **Create parameter**\.
-
-   You have created a parameter called **DestinationA\_MyHLS** that holds the password **due484u**\. The parameter is stored in the AWS Systems Manager Parameter Store\. For more information, see [About the Feature for Creating Password Parameters](requirements-for-EC2.md#about-EC2Password)\.
-
-1. For **HLS group destination B**, for **URL**, enter the second input URL that AWS Elemental MediaPackage created for you in [Step 2: Set Up the Downstream System](#getting-started-step2)\. For example, **https://mgu654\.mediapackage\.us\-east\-1\.amazonaws\.com/in/v1/xmm9s/channel**\. 
-
-1. For **Credentials**:
-   + For **Username**, enter the user name that corresponds to this URL\. For example, **883hdux**\. 
-   + For **Password**, choose **Create parameter**\. For **Name**, enter **DestinationB\_MyHLS**\. For **Password**, enter the password that corresponds to the URL\. For example, **634hjik**\.
-
-1. Choose **Create parameter**\.
-
-   You have created a parameter called **DestinationB\_MyHLS** that holds the password **634hjik**\. The parameter is stored in the AWS Systems Manager Parameter Store\. 
-
-1. In the **HLS settings** section, for **Name**, enter **MyHLS**\. 
-
-1. For **CDN settings**, choose **Hls webdav**\. This is the connection that AWS Elemental MediaPackage \(the downstream system for the channel output\) uses\. 
-
-   Leave the defaults for all the other **CDN settings** fields\.
-
-1. For all other fields in this pane, keep the default values\.
-
-## Step 8: Set Up the Output and Encodes<a name="getting-started-step6"></a>
-
-Now that you have defined one output group in the channel, you can set up an output ins that output group, and specify how you want to encode the video output and the audio output\.
-
-**To set up the output**
-
-1. In the **Output groups** section, choose **Output 1**\. MediaLive automatically added this output when you created the output group\. In addition, MediaLive automatically set up the output with one video and one audio, as shown in the **Stream settings** section\. 
-
-1. In **Stream settings**, choose **Video**\.
-
-1. For **Video description name**, change the default name to **H264 video**\.
-
-1. For **Codec settings**, choose **H264**\.
-
-   Leave the remaining fields with the default values\. Specifically, keep **Width** and **Height** empty to use the same width as the input\.
-
-1. In **Stream settings**, choose **Audio 1**\.
-
-1. For **Audio description name**, change the default name to **AAC audio**\.
-
-1. For **Audio selector name**, enter **My audio source**, which is the audio selector that you created in[Step 6: Set up Input Video, Audio, Captions](#getting-started-step4a-input-selectors)\.
-
-1. For **Codec settings**, choose **AAC**\.
-
-1. Leave the remaining fields with the default values\. 
-
-## Step 9: Create Your Channel<a name="getting-started-step7"></a>
+## Step 8: Create Your Channel<a name="getting-started-step7"></a>
 
 You have entered the minimum required information, so you are ready to create the channel\.
 
@@ -201,7 +151,7 @@ You have entered the minimum required information, so you are ready to create th
 
   The **Channel** section reappears and shows the newly created channel, named **MyHLS**\. The state changes to **Creating**, then **Ready**\.
 
-## Step 10: Start the Upstream System and the Channel (OBS Studio)<a name="getting-started-step8"></a>
+## Step 9: Start the Upstream System and the Channel (OBS Studio)<a name="getting-started-step8"></a>
 
 You can now start the upstream system in order to push the streaming content to MediaLive, encode the content, and send it to AWS Elemental MediaPackage\. You can preview the output on MediaPackage\.
 
@@ -219,7 +169,7 @@ You can now start the upstream system in order to push the streaming content to 
 
 1. Start the video\. The output from AWS Elemental MediaLive starts playing\.
 
-## Step 11: Clean Up<a name="getting-started-step9"></a>
+## Step 10: Clean Up<a name="getting-started-step9"></a>
 
 To avoid extraneous charges, delete this channel and input when you have finished working with it\.
 
