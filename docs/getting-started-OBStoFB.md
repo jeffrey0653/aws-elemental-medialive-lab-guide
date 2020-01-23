@@ -74,7 +74,7 @@ You must also create an input security group for the input\. This input security
 
 1. Choose **Create** to create the input\.
 
-   MediaLive adds the input to the list of inputs and automatically creates two destinations \(one primary and one redundant\)\. These destinations include the port 5000\. For example,  **rtmp://18.176.19.105:1935/live/main** and **rtmp://18.178.120.169:1935/live/backup**\. These are the two locations where the upstream system must push the source\. 
+   MediaLive adds the input to the list of inputs and automatically creates two destinations \(one primary and one redundant\)\. These destinations include the URL and port\. For example, **rtmp://18.176.19.105:1935/live/main** and **rtmp://18.178.120.169:1935/live/backup**\. These are the two locations where the upstream system must push the source\. 
 
 1. Make a note of these two addresses because you will need them in [Step 10: Start the Upstream System and the Channel](#getting-started-step8)\.
 
@@ -151,7 +151,7 @@ You can now start the upstream system in order to push the streaming content to 
 1. Choose **Settings**\, Choose **Stream**.
    
    + For **Service**, choose **Custom**
-   + For **Server**, enter the URL for you in [Step 2: Set Up the Downstream System](#getting-started-step2)\. For example, **rtmp://18.176.19.105:1935/live**\. 
+   + For **Server**, enter the URL for you in [Step 3: Create an Input (Elemental MediaLive)](#getting-started-step3)\. For example, **rtmp://18.176.19.105:1935/live**\. 
    + For **Stream Key**, enter the content you input for Application name and instance in [Step 3: Create an Input (Elemental MediaLive)](#getting-started-step3)\. For example, **main**\.
 
 1. Click **Strat Streaming**. The output from AWS Elemental MediaLive starts playing\.
