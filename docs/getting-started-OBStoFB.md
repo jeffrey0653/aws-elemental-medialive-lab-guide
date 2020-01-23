@@ -90,11 +90,14 @@ The first step to creating a channel from scratch is to choose the IAM role that
 
 1. In the **Channels** section, choose **Create channel**\. 
 
-1. In the **Channel and input details** pane, in **General info**, for **Channel name**, enter **Test channel**\.
+1. In the **Channel and input details** pane, in **General info**, for **Channel name**, enter **FB Live 0131**\.
 
 1. For **IAM role**, choose **Create role from template** and choose **Create IAM role**\. The **Use existing role** list now shows the role **MediaLiveAccessRole**\.
 
 1. Choose **Remember role**\.
+
+1. For **Channel class**, choose **SINGLE_PIPELINE**.
+
 
 ## Step 5: Attach the Input<a name="getting-started-step4b"></a>
 
@@ -120,9 +123,11 @@ Once you have set up the input, you continue with the channel creation by creati
 
 1. In the **Add output group** section, choose **RTMP**, and then choose **Confirm**\. 
 
+Create an Input (Elemental MediaLive)<a name="getting-started-step3"></a>
+
 1. In the **HLS group destination A** section  
-   + For **URL**, enter the first input URL that Facebook Live generated `URL` for you in [Step 2: Set Up the Downstream System](#getting-started-step2)\. For example, **rtmps://live-api-s.facebook.com:443/rtmp/**\. 
-   + For **Stream Name**, center the first input URL that Facebook Live generated `Stream Key` for you in [Step 2: Set Up the Downstream System](#getting-started-step2)\. For example, **152078559567871?s_bl=1&s_sw=0&s_vt=api-s&a=AbzpavjomoZCWztK**\.
+   + For **URL**, enter the URL that generated for you in [Step 2: Set Up the Downstream System](#getting-started-step2)\. For example, **rtmps://live-api-s.facebook.com:443/rtmp/**\. 
+   + For **Stream Name**, enter the URL that generated for you in [Step 2: Set Up the Downstream System](#getting-started-step2)\. For example, **rtmps://live-api-s.facebook.com:443/rtmp/**\.
 
 ## Step 7: Create Your Channel<a name="getting-started-step7"></a>
 
@@ -135,21 +140,21 @@ You have entered the minimum required information, so you are ready to create th
 
 ## Step 8: Start the Upstream System and the Channel (OBS Studio)<a name="getting-started-step8"></a>
 
-You can now start the upstream system in order to push the streaming content to MediaLive, encode the content, and send it to AWS Elemental MediaPackage\. You can preview the output on MediaPackage\.
+You can now start the upstream system in order to push the streaming content to MediaLive.
 
 **To start the upstream system**
 
-1. In your upstream system, start streaming the video sources that you set up in [Step 1: Set Up the Upstream System](#getting-started-step1)\. Set them up to push to the two destinations that you noted in [Step 3: Create an Input](#getting-started-step3)\. These are two addresses in the input in MediaLive\. For example,  **rtp://198\.51\.100\.10:5000** and **rtp://192\.0\.2\.131:5000**\. 
+1. Launch application **OBS Studio**. 
 
 1. On the **Channels** list, choose the channel\.
 
-1. Choose **Start**\. The channel state changes to **Starting**, then to **Running**\.
+1. Choose **Settings**\, Choose **Stream**.
+   
+   + For **Service**, choose **Custom**
+   + For **Server**, enter the URL for you in [Step 2: Set Up the Downstream System](#getting-started-step2)\. For example, **rtmp://18.176.19.105:1935/live**\. 
+   + For **Stream Key**, enter the content you input for Application name and instance in [Step 3: Create an Input (Elemental MediaLive)](#getting-started-step3)\. For example, **main**\.
 
-1. Switch to the web browser tab or window where the AWS Elemental MediaPackage is displayed\. 
-
-1. Choose the channel link \(not the radio button\)\. On the details page, under **Endpoints**, choose **Play**\. A preview window appears\. 
-
-1. Start the video\. The output from AWS Elemental MediaLive starts playing\.
+1. Click **Strat Streaming**. The output from AWS Elemental MediaLive starts playing\.
 
 ## Step - Clean Up<a name="getting-started-step9"></a>
 
