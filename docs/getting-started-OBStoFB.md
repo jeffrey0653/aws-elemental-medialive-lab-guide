@@ -1,9 +1,6 @@
 # Getting Started with AWS Elemental MediaLive<a name="getting-started"></a>
 
-This tutorial describes how to ingest a video source from an RTP source and generate one HLS output that contains one H\.264 video encode and one audio encode\. MediaLive will send the output to AWS Elemental MediaPackage\. The output will consist of the following: 
-+ One master manifest: channel\.m3u8
-+ One rendition manifest: channel\_1\.m3u8
-+ TS files for each output: channel\_1\.00001\.ts, channel\_1\.00002\.ts, channel\_1\.00003\.ts, and so on
+This tutorial describes how to ingest a video source from an RTMP push source and generate one RTMP output video and one audio \. MediaLive will send the output to Facebook Live. The output will consist of the following: 
 
 This tutorial uses the default values for most configuration fields in the channel\.
 
@@ -14,7 +11,7 @@ All the text marked as an example in this tutorial is just that—a sample that 
 
 Before you can use MediaLive, you need an AWS account and the appropriate permissions to access, create, and view MediaLive components\. Complete the steps in [Setting Up AWS Elemental MediaLive](setting-up.md), and then return to this tutorial\. You can't use MediaLive, even as an administrator with full access, until you perform those steps\.
 
-## Step 1: Set Up the Upstream System (Laptop OBS Studio)<a name="getting-started-step1"></a>
+## Step 1: Set Up the Upstream System (OBS Studio)<a name="getting-started-step1"></a>
 
 The upstream system is the local OBS Studio that streams the video to MediaLive\. The upstream system can be anything from an on\-premises appliance that is serving as a "contribution encoder" to an application running on a smart phone\. You must perform some setup of your upstream system before you start working with MediaLive\. 
 
@@ -28,30 +25,29 @@ For the purposes of this tutorial, the upstream system must be capable of sendin
 
 1. Enter URL **http://www.clocktab.com**
 
-## Step 2: Set Up the Downstream System<a name="getting-started-step2"></a>
+## Step 2: Set Up the Downstream System (Facebook Live)<a name="getting-started-step2"></a>
 
-In this tutorial, the downstream system \(the destination for the output from MediaLive\) is AWS Elemental MediaPackage\. 
+In this tutorial, the downstream system (the destination for the output from MediaLive) is Facebook Live. 
 
 You must set up a channel in AWS Elemental MediaPackage, and you must set it up now because you need the two input URLs that AWS Elemental MediaPackage generates\. You enter these input URLs into MediaLive\.
 
 **To set up the downstream system**
 
-1. Sign in to the AWS Management Console and open the MediaPackage console at [https://console\.aws\.amazon\.com/mediapackage/](https://console.aws.amazon.com/mediapackage/)\.
+1. Sign in to the Facebook at [https://www.facebook.com].
 
-1. In a new web browser tab or window, display the [Getting Started for AWS Elemental MediaPackage](https://docs.aws.amazon.com/mediapackage/latest/ug/getting-started.html) and follow steps 1 to 3 to create one channel and its endpoint\.
+1. Switch to your own fan page.
 
-1. Make a note of the data that AWS Elemental MediaPackage has generated: two input URLs and their associated names and passwords\. For example, the data for one input URL might be:
-   + `https://39fuo4.mediapackage.us-east-1.amazonaws.com/in/v1/88dpie/channel`
-   + `ue739wuty`
-   + `due484u`
+1. Click **Publishing Tools**, Click **Video Library** in left panel
 
-   Your channel might be in a different Region from the example\.
+1. Click **+ Live**
 
 1. Keep the web browser open; don't close it yet\.
 
+   Your Live Stream to the Live API information is show in web page with **Server URL** and **Stream Key**
+
 ## Step 3: Create an Input<a name="getting-started-step3"></a>
 
-You must create an input\. The input defines how the upstream system provides the source video stream to MediaLive\. In this tutorial, you create an RTP input\. 
+You must create an input\. The input defines how the upstream system provides the source video stream to MediaLive\. In this tutorial, you create an RTMP push input\. 
 
 You must also create an input security group for the input\. This input security group applies the rule "only this specific IP address \(an IP address that you own\) can push to this input on MediaLive\." Without the protection of this rule, any third party could push content to an MediaLive input if they know the IP address and port of the input\. 
 
