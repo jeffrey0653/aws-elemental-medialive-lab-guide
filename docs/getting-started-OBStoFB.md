@@ -127,7 +127,7 @@ Create an Input (Elemental MediaLive)<a name="getting-started-step3"></a>
 
 1. In the **HLS group destination A** section  
    + For **URL**, enter the URL that generated for you in [Step 2: Set Up the Downstream System](#getting-started-step2)\. For example, **rtmps://live-api-s.facebook.com:443/rtmp/**\. 
-   + For **Stream Name**, enter the URL that generated for you in [Step 2: Set Up the Downstream System](#getting-started-step2)\. For example, **rtmps://live-api-s.facebook.com:443/rtmp/**\.
+   + For **Stream Name**, enter the Stream Key that generated for you in [Step 2: Set Up the Downstream System](#getting-started-step2)\. For example, **167575214684872?s_bl=1&s_sw=0&s_vt=api-s&a=AbyOQtGU3sXanjCV**\.
 
 ## Step 7: Create Your Channel<a name="getting-started-step7"></a>
 
